@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends "udl_app/base.html" %}
+{% load custom_templates %}
+{% block body_block %}
+    {% if registered %}
+        <h1 class="display-4">Thank you for registering!</h1>
+        <p class="lead">Please proceed to the home page.</p>
+        <a class="btn btn-primary" href="{% url 'index' %}">Home</a>
+    {% else %}
+        <h1 class="display-4">Register</h1>
+        <p class="lead">It's quick and easy!</p>
+        <form class="form-group" enctype="multipart/form-data" method="post">
+            <div id="user-form">
+                <div>
+                    {{ user_form.errors }}
+                    {{ profile_form.errors }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group" style="max-width:500px">
+                    <label class="custom-file-label" id="inputGroupFileLabel">Upload profile picture</label>
+                    {{ profile_form.profile_pic|add_attributes:"class=custom-file-input,id=inputGroupFile" }}
+                    <script>
+                    </script>
+                </div>
+            </div>
+            <div class="form-group">
+                {{ profile_form.aadhaar_id|add_attributes:"class=form-control,style=max-width:500px,min=100000000000,max=999999999999,placeholder=Aadhaar Id" }}
+            </div>
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" name="submit" value="Register">
+        </form>
+        <script type="text/javascript">
+
+
+            // for user_form
+
+            {% for field in user_form %}
+                var new_div = document.createElement("div");
+                new_div.className = "form-group";
+                var input_element = '{{ field|add_attributes:"class=form-control,style=max-width:500px" }}';
+                new_div.innerHTML = input_element;
+                new_div.childNodes[0].placeholder = "{{ field.label }}";
+                document.getElementById("user-form").appendChild(new_div);
+            {% endfor %}
+
+
+            // for profile_form
+
+            var label = document.querySelector('#inputGroupFileLabel');
+            var input = document.querySelector('#inputGroupFile');
+            input.addEventListener('change', updateLabel);
+
+            function updateLabel(){
+                label.innerHTML = input.files[0].name;
+                }
+        </script>
+    {% endif %}
+{% endblock %}

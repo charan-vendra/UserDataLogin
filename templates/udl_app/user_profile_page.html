@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+{% extends "udl_app/base.html" %}
+{% block body_block %}
+    <h1>You are logged in, nice!</h1>
+    <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
