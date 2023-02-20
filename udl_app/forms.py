@@ -4,7 +4,7 @@ from .models import UserProfileInfo
 
 
 class UserForm(forms.ModelForm):
-    email = forms.EmailField(required=True, validators=[])
+    email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:

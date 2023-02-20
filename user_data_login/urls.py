@@ -13,10 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.http import HttpResponseRedirect
+from django.urls import path, reverse
 from django.conf.urls import include
 from django.contrib import admin
 
+
+def login(request):
+    if request.user and request.user.is_authenticated and request.user.is_active and request.user.is_staff:
+        return HttpResponseRedirect(reverse('admin:index', current_app='admin'))
+    else:
+        return HttpResponseRedirect(reverse('index', current_app='udl_app'))
+
+
+admin.site.login = login
 
 urlpatterns = [
     path('admin/', admin.site.urls),

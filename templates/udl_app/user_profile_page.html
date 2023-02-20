@@ -1,6 +1,32 @@
 <!DOCTYPE html>
 {% extends "udl_app/base.html" %}
 {% block body_block %}
-    <h1>You are logged in, nice!</h1>
+    <h1>Welcome {{ user.username|title }}!</h1>
+    <hr class="my-4">
+    {% if user.is_staff%}
+    <p class="lead">What would you like to do next?</p>
+    <a class="mb-1 btn btn-primary" href="{% url 'admin:index' %}">Go To Admin Panel</a>
+    {% else %}
+    <p class="lead">Here are your details!</p>
+    <p class="lead">They have also been sent to you at: <i><u>{{ user.email }}</u></i></p>
+    <table class="table table-dark table-hover">
+        <tbody>
+            <tr>
+                <th scope="row">Username:</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Email:</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Aadhaar Id:</th>
+                <td>{{ user.userprofileinfo.aadhaar_id }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+    <div class="form-group">
     <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+    </div>
 {% endblock %}
