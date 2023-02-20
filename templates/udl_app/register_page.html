@@ -4,6 +4,7 @@
 {% block body_block %}
     {% if registered %}
         <h1 class="display-4">Thank you for registering!</h1>
+        <hr class="my-4">
         <p class="lead">Please proceed to the home page.</p>
         <a class="btn btn-primary" href="{% url 'index' %}">Home</a>
     {% else %}
